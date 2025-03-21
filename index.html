@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure File Sharing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center h-screen">
+
+    <div class="w-full max-w-md p-6 bg-gray-800 rounded-lg shadow-lg text-center">
+        <h2 class="text-2xl font-semibold mb-4">🔐 Secure File Sharing</h2>
+
+        <!-- Upload Section -->
+        <div class="mb-6">
+            <label class="block text-left mb-2 text-sm font-medium">Upload File</label>
+            <input type="file" id="fileInput" class="w-full p-2 bg-gray-700 rounded text-gray-300">
+            <button onclick="uploadFile()" class="mt-3 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                Encrypt & Upload 🔒
+            </button>
+        </div>
+
+        <!-- Download Section -->
+        <div>
+            <label class="block text-left mb-2 text-sm font-medium">Download File</label>
+            <input type="text" id="fileName" placeholder="Enter file name" class="w-full p-2 bg-gray-700 rounded text-gray-300">
+            <button onclick="downloadFile()" class="mt-3 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                Download & Decrypt 🔓
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function uploadFile() {
+            const file = document.getElementById("fileInput").files[0];
+            if (!file) return alert("Please select a file.");
+            
+            const formData = new FormData();
+            formData.append("file", file);
+
+            fetch("http://127.0.0.1:8000/encrypt", {
+                method: "POST",
+                body: formData
+            }).then(response => response.json())
+              .then(data => alert("File Encrypted: " + data.filename))
+              .catch(error => alert("Error uploading file."));
+        }
+
+        function downloadFile() {
+            const fileName = document.getElementById("fileName").value;
+            if (!fileName) return alert("Please enter a file name.");
+
+            window.location.href = `http://127.0.0.1:8000/decrypt?filename=${fileName}`;
+        }
+    </script>
+
+</body>
+</html>

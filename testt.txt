@@ -1,0 +1,58 @@
+# from Crypto.Cipher import AES
+# import time
+# from itertools import product
+# import string
+
+# # 🔑 Simple 16-byte key for faster brute force
+# key = b'abcd1234abcd1234'  # AES-128 (16 bytes)
+
+# def pad(data):
+#     """Pads the data to make it a multiple of 16 bytes"""
+#     return data + b' ' * (16 - len(data) % 16)
+
+# # 🔐 Encrypt File
+# def encrypt_file(input_file, output_file):
+#     cipher = AES.new(key, AES.MODE_ECB)  # Using ECB (easier to crack)
+#     with open(input_file, 'rb') as f:
+#         data = f.read()
+#     encrypted_data = cipher.encrypt(pad(data))
+    
+#     with open(output_file, 'wb') as f:
+#         f.write(encrypted_data)
+    
+#     print(f"✅ File '{input_file}' encrypted as '{output_file}'!")
+
+# # 🔥 Brute Force Attack
+# def brute_force_attack(enc_file, original_file):
+#     chars = 'abcd1234'  # Small charset for faster cracking
+#     key_length = 16  # AES-128 key length
+
+#     start_time = time.time()  # Start the timer
+#     print("🔍 Brute force attack started...")
+
+#     for i, guess in enumerate(product(chars, repeat=key_length)):
+#         if i % 10000 == 0:
+#             print(f"🔄 Trying {i}th key...")
+
+#         guess_key = ''.join(guess).encode()
+#         cipher = AES.new(guess_key, AES.MODE_ECB)
+        
+#         with open(enc_file, 'rb') as f:
+#             encrypted_data = f.read()
+
+#         try:
+#             decrypted_data = cipher.decrypt(encrypted_data).rstrip(b' ')
+#             with open(original_file, 'rb') as f:
+#                 if decrypted_data == f.read():
+#                     end_time = time.time()  # Stop timer
+#                     time_taken = end_time - start_time
+#                     print(f"🎯 Key found: {guess_key.decode()} in {time_taken:.2f} seconds")
+#                     return
+#         except:
+#             pass
+
+#     print("❌ Brute force failed.")
+
+
+# encrypt_file('test.txt', 'encrypted.enc')
+# brute_force_attack('encrypted.enc', 'test.txt')

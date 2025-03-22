@@ -34,23 +34,52 @@
         function uploadFile() {
             const file = document.getElementById("fileInput").files[0];
             if (!file) return alert("Please select a file.");
-            
+
             const formData = new FormData();
             formData.append("file", file);
 
             fetch("http://127.0.0.1:8000/encrypt", {
                 method: "POST",
                 body: formData
-            }).then(response => response.json())
-              .then(data => alert("File Encrypted: " + data.filename))
-              .catch(error => alert("Error uploading file."));
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.error || "Unknown error"); });
+                }
+                return response.json();
+            })
+            .then(data => alert("✅ File Encrypted: " + data.filename))
+            .catch(error => {
+                console.error("Upload error:", error);
+                alert("❌ Error uploading file: " + error.message);
+            });
         }
 
         function downloadFile() {
             const fileName = document.getElementById("fileName").value;
             if (!fileName) return alert("Please enter a file name.");
 
-            window.location.href = `http://127.0.0.1:8000/decrypt?filename=${fileName}`;
+            fetch(`http://127.0.0.1:8000/decrypt?filename=${fileName}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.error || "Unknown error"); });
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = fileName.replace(".enc", ".dec");
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                alert("✅ File Decrypted & Downloaded!");
+            })
+            .catch(error => {
+                console.error("Download error:", error);
+                alert("❌ Error downloading file: " + error.message);
+            });
         }
     </script>
 

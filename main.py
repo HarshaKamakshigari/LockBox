@@ -91,21 +91,21 @@ app.add_middleware(
     allow_headers=["*"], 
 )
 
-# Weak AES keys (5 numeric + 5 alphabetic)
+
 AES_KEYS = [
-    b"0000000000000000",  # Weak numeric key
+    b"0000000000000000",  
     b"1111111111111111",
     b"2222222222222222",
     b"3333333333333333",
     b"4444444444444444",
-    b"AAAAAAAAAAAAAAAA",  # Weak alphabetic key
+    b"AAAAAAAAAAAAAAAA",  
     b"BBBBBBBBBBBBBBBB",
     b"CCCCCCCCCCCCCCCC",
     b"DDDDDDDDDDDDDDDD",
     b"EEEEEEEEEEEEEEEE"
 ]
 
-IV = b"0000000000000000"  # Static IV (weak)
+IV = b"0000000000000000" 
 UPLOAD_FOLDER = "uploads/"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -117,13 +117,13 @@ async def encrypt_file(file: UploadFile = File(...)):
     try:
         file_content = await file.read()
 
-        key_index = random.randint(0, len(AES_KEYS) - 1)  # Pick a random weak key
+        key_index = random.randint(0, len(AES_KEYS) - 1) 
         selected_key = AES_KEYS[key_index]
 
         cipher = AES.new(selected_key, AES.MODE_CBC, IV)
         encrypted_data = cipher.encrypt(pad(file_content, AES.block_size))
 
-        encrypted_filename = f"{file.filename}.enc_{key_index}"  # Store key index in filename
+        encrypted_filename = f"{file.filename}.enc_{key_index}"  
         encrypted_file_path = os.path.join(UPLOAD_FOLDER, encrypted_filename)
 
         with open(encrypted_file_path, "wb") as f:
@@ -140,13 +140,12 @@ async def decrypt_file(file: UploadFile = File(...)):
         return {"error": "No file uploaded."}
 
     try:
-        # Extract the key index from the filename
         filename = file.filename
         if not filename.endswith(tuple(f".enc_{i}" for i in range(len(AES_KEYS)))):
             return {"error": "Invalid file format. Missing key index."}
 
-        key_index = int(filename.split("_")[-1])  # Extract the stored key index
-        selected_key = AES_KEYS[key_index]  # Retrieve the corresponding weak key
+        key_index = int(filename.split("_")[-1]) 
+        selected_key = AES_KEYS[key_index]  
 
         encrypted_data = await file.read()
         cipher = AES.new(selected_key, AES.MODE_CBC, IV)

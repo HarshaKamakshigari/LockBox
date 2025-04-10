@@ -1,5 +1,5 @@
 
-# 🔐 AES File Encryption Web App
+# 🔐LockBox AES File Encryption Web App
 
 A simple and secure AES file encryption and decryption web app built using **FastAPI** for the backend and **HTML** for the frontend. It allows users to encrypt and decrypt files using AES encryption directly in their browser.
 
@@ -26,23 +26,7 @@ A simple and secure AES file encryption and decryption web app built using **Fas
 
 ---
 
-## 📁 Project Structure
 
-```
-aes-file-encryption-app/
-├── app/
-│   ├── main.py               # FastAPI application
-│   ├── utils.py              # AES encryption/decryption logic
-│   ├── templates/
-│   │   └── index.html        # Frontend HTML template
-│   └── static/               # (Optional) CSS/JS files
-├── Dockerfile
-├── .github/
-│   └── workflows/
-│       └── ci.yml            # GitHub Actions workflow
-├── requirements.txt
-└── README.md
-```
 
 ---
 
@@ -53,7 +37,7 @@ aes-file-encryption-app/
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/aes-file-encryption-app.git
+git clone https://github.com/HarshaKamakshigari/LockBox
 cd aes-file-encryption-app
 ```
 

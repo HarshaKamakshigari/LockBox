@@ -26,10 +26,6 @@ A simple and secure AES file encryption and decryption web app built using **Fas
 
 ---
 
-
-
----
-
 ## 🚀 Getting Started
 
 ### 🔧 Local Setup (without Docker)
@@ -117,6 +113,19 @@ pycryptodome
 
 ---
 
+## 🎥 Video Demonstration
+
+Watch the video demonstration of the app here:  
+[Video Link](https://www.loom.com/share/a362cd7fdc224a6d856b6f0d5af40449?sid=e1778834-6dce-43d2-b8fa-34317b431362)
+
+---
+
+## 📑 Presentation
+
+You can view the related presentation here:  
+[PowerPoint Link](https://www.canva.com/design/DAGksnPPPzM/4lJaXoiG2AN533gXj4JzGQ/edit?utm_content=DAGksnPPPzM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
+---
 
 ## 📜 License
 
@@ -124,4 +133,5 @@ MIT License
 
 ---
 
-Made with by [Harsha Kamakshigari]([https://github.com/HarshaKamakshigari])
+Made with by [Harsha Kamakshigari](https://github.com/HarshaKamakshigari)
+
